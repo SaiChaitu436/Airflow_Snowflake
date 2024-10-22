@@ -22,7 +22,7 @@ dbt_main_seed_dag = DbtDag(
     profile_config=profile_config,
     execution_config=ExecutionConfig(dbt_executable_path=dbt_executable_path),
     render_config=RenderConfig(
-        select=["path:seeds", "path:models/raw_data.sql"],
+        select=["path:seeds", "path:models/cdc/final_data_table.sql"],
     ),
     schedule_interval="@daily",
     start_date=datetime(2023, 9, 10),

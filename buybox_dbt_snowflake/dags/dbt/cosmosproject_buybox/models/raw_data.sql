@@ -1,1 +1,1 @@
-select * from AIRFLOW.dev.SINGLE_ASIN
+select * ,current_timestamp() as created_at from AIRFLOW.dev.SINGLE_ASIN

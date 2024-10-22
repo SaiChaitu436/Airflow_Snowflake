@@ -15,16 +15,21 @@ profile_config = ProfileConfig(
     profiles_yml_filepath=dbt_project_path / "profiles.yml",  # Ensure this points to the correct path
 )
 
-dbt_seed_model_dag = DbtDag(
+dbt_seed_model_cdc_dag = DbtDag(
     project_config=ProjectConfig(dbt_project_path),
     operator_args={"install_deps": True},
     profile_config=profile_config,
     execution_config=ExecutionConfig(dbt_executable_path=dbt_executable_path),
     render_config=RenderConfig(
-        select=["path:seeds", "path:models"],  # Combine the select arguments into one list
+        select=["path:seeds",
+         "path:models/cdc/base_seed_model.sql",
+         "path:models/cdc/merge_seed.sql",
+         "path:models/cdc/final_data_table.sql",
+         
+         ],  # Combine the select arguments into one list
     ),
     schedule_interval="@daily",
     start_date=datetime(2023, 9, 10),
     catchup=False,
-    dag_id="dbt_seed_model_dag",
+    dag_id="dbt_seed_model_cdc_dag",
 )
