@@ -16,16 +16,16 @@ profile_config = ProfileConfig(
     
 )
 
-dbt_seed_dag = DbtDag(
+dbt_main_seed_dag = DbtDag(
     project_config=ProjectConfig(dbt_project_path),
     operator_args={"install_deps": True},
     profile_config=profile_config,
     execution_config=ExecutionConfig(dbt_executable_path=dbt_executable_path),
     render_config=RenderConfig(
-        select=["path:seeds"],
+        select=["path:seeds", "path:models/raw_data.sql"],
     ),
     schedule_interval="@daily",
     start_date=datetime(2023, 9, 10),
     catchup=False,
-    dag_id="dbt_seed_dag",
+    dag_id="dbt_main_seed_dag",
 )

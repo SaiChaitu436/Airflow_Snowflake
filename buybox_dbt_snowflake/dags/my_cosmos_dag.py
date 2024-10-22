@@ -22,7 +22,7 @@ dbt_snowflake_dag = DbtDag(
     profile_config=profile_config,
     execution_config=ExecutionConfig(dbt_executable_path=dbt_executable_path),
     render_config=RenderConfig(
-        select=["path:models"],
+        select=["path:models/raw_data.sql"],
     ),
     schedule_interval="@daily",
     start_date=datetime(2023, 9, 10),
