@@ -1,0 +1,1 @@
+select * from AIRFLOW.dev.SINGLE_ASIN

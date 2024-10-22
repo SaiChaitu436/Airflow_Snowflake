@@ -1,0 +1,13 @@
+cosmosproject_buybox:
+  outputs:
+    dev:
+      account: jyvbwgv-llb12765
+      database: AIRFLOW
+      password: Sivateja#2003
+      role: ACCOUNTADMIN
+      schema: dev
+      threads: 1
+      type: snowflake
+      user: Sivateja2001
+      warehouse: COMPUTE_WH
+  target: dev
