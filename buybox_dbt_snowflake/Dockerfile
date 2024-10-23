@@ -91,6 +91,6 @@ RUN pip install --upgrade pip && \
 # Create a virtual environment inside the AIRFLOW_HOME and install additional dependencies for dbt
 RUN python -m venv $AIRFLOW_HOME/dbt_venv && \
     . $AIRFLOW_HOME/dbt_venv/bin/activate && \
-    pip install --no-cache-dir dbt==1.0.0.38.14 dbt-snowflake==1.8.3 astronomer-cosmos==1.7.0 && \
+    pip install --no-cache-dir dbt==1.0.0.38.14 dbt-snowflake==1.8.3 dbt-bigquery==1.8.3 astronomer-cosmos==1.7.0 && \
     deactivate
 

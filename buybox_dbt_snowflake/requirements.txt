@@ -316,6 +316,8 @@ astronomer-cosmos
 apache-airflow
 apache-airflow-providers-snowflake
 dbt-snowflake
+dbt-bigquery
+
 
 ##############################
 # aenum==3.1.15

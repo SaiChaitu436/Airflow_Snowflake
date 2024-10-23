@@ -1,17 +1,14 @@
 WITH
--- New data from the source
 new_data AS (
   SELECT *
-  FROM {{ ref('base_seed_model') }}  -- Fresh data from the source model
+  FROM {{ ref('base_seed_model') }}
 ),
 
--- Existing seed data from the previous run
 existing_data AS (
   SELECT *
   FROM {{ ref('final_data_table') }}  
 )
 
--- Combine new and existing data
 SELECT *
 FROM new_data
 UNION ALL
