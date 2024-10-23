@@ -18,22 +18,20 @@ profile_config = ProfileConfig(
 
 @dag(
     start_date=datetime(2023, 9, 10),
-    schedule="@daily",  # Runs daily
+    schedule="@daily",
     catchup=False,
 )
 def cosmosproject_buybox_dag():
-    # Task group for running dbt seeds
     seed_data = DbtTaskGroup(
         group_id="seed_data",
         project_config=ProjectConfig(dbt_project_path),
         execution_config=ExecutionConfig(dbt_executable_path=dbt_executable_path),
         profile_config=profile_config,
         render_config=RenderConfig(
-            select=["path:seeds"],  # Specify seed paths
+            select=["path:seeds"],  
         )
     )
 
-    # Task group for running dbt models
     run_models = DbtTaskGroup(
         group_id="run_models",
         project_config=ProjectConfig(dbt_project_path),
