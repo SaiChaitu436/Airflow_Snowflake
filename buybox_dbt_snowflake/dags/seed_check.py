@@ -1,8 +1,7 @@
 from datetime import datetime
 import os
-import cosmos
-from cosmos import DbtDag, ProjectConfig, ProfileConfig, ExecutionConfig,RenderConfig
-from cosmos.profiles import SnowflakeUserPasswordProfileMapping
+from cosmos import DbtTaskGroup, ProjectConfig, ProfileConfig, ExecutionConfig, RenderConfig
+from airflow.decorators import dag
 from pathlib import Path
 
 os.environ['AIRFLOW_HOME'] = '/usr/local/airflow'
@@ -12,20 +11,41 @@ dbt_executable_path = f"{os.environ['AIRFLOW_HOME']}/dbt_venv/bin/dbt"
 profile_config = ProfileConfig(
     profile_name="cosmosproject_buybox",
     target_name="dev",
-    profiles_yml_filepath=dbt_project_path / "profiles.yml",  # Ensure this points to the correct path
-    
+    profiles_yml_filepath=dbt_project_path / "profiles.yml",
 )
 
-dbt_main_seed_dag = DbtDag(
-    project_config=ProjectConfig(dbt_project_path),
-    operator_args={"install_deps": True},
-    profile_config=profile_config,
-    execution_config=ExecutionConfig(dbt_executable_path=dbt_executable_path),
-    render_config=RenderConfig(
-        select=["path:seeds", "path:models/cdc/final_data_table.sql"],
-    ),
-    schedule_interval="@daily",
+@dag(
     start_date=datetime(2023, 9, 10),
+    schedule="@daily",  # Runs daily
     catchup=False,
-    dag_id="dbt_main_seed_dag",
 )
+def seed_model_first_dag():
+    # Task group for running dbt seeds
+    seed_dag = DbtTaskGroup(
+        group_id="seed_dag",
+        project_config=ProjectConfig(dbt_project_path),
+        execution_config=ExecutionConfig(dbt_executable_path=dbt_executable_path),
+        profile_config=profile_config,
+        render_config=RenderConfig(
+            select=["path:seeds"],  
+        )
+    )
+
+    # Task group for running dbt models
+    model_dag = DbtTaskGroup(
+        group_id="model_dag",
+        project_config=ProjectConfig(dbt_project_path),
+        execution_config=ExecutionConfig(dbt_executable_path=dbt_executable_path),
+        profile_config=profile_config,
+        render_config=RenderConfig(
+            select=[
+                "path:models/cdc/merge_seed.sql",
+                "path:models/cdc/final_data_table.sql",
+            ],
+        )
+    )
+    
+
+    seed_dag >> model_dag 
+
+seed_model_first_dag_instance = seed_model_first_dag()

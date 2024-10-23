@@ -33,4 +33,4 @@ target-path: "target"
 # files using the `{{ config(...) }}` macro.
 models:
   cosmosproject_buybox:
-      +materialized: view
+      +materialized: table
