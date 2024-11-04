@@ -1,31 +1,30 @@
 # cosmosproject_buybox:
 #   outputs:
 #     dev:
-#       account: wrwycoj-fc44141
-#       database: DAG_DB
-#       password: Saaho123
+#       account: jyvbwgv-llb12765
+#       database: AIRFLOW
+#       password: Sivateja#2003
 #       role: ACCOUNTADMIN
-#       schema: DEV
+#       schema: dev
 #       threads: 1
 #       type: snowflake
-#       user: Saaho
+#       user: Sivateja2001
 #       warehouse: COMPUTE_WH
 #   target: dev
 
 
 cosmosproject_buybox:
   outputs:
-    outputs:
     dev:
-      dataset: wellbefore
+      dataset: buybox_dataset
       job_execution_timeout_seconds: 300
       job_retries: 1
-      keyfile: /usr/local/airflow/include/gcp/dbtproject-439612-b1aafa212fc0.json
+      # keyfile: 'C:\Users\user\OneDrive - Sails Software Solutions Pvt Ltd\Documents\Git-Items\dbt-BigQuery-cosmos\buybox_dbt_snowflake\include\gcp\dbt-user-creds-02.json'
+      keyfile: /usr/local/airflow/include/gcp/de-coe-creds-01.json
       location: US
       method: service-account
       priority: interactive
-      project: dbtproject-439612
+      project: de-coe
       threads: 1
       type: bigquery
   target: dev
-

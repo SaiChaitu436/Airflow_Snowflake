@@ -1,4 +1,13 @@
-with source_data as(
-    select * from DAG_DB.DEV.SINGLE_ASIN
+WITH source_data AS (
+    SELECT * 
+    FROM {{ ref('base_seed_model') }}  
 )
-select * ,current_timestamp() as created_at from source_data
+SELECT 
+  message_id,
+  message_body,
+  TIMESTAMP(event_time) AS event_time, 
+  TIMESTAMP(create_time) AS create_time, 
+  TIMESTAMP(publish_time) AS publish_time, 
+  batch_id,
+  created_at
+FROM source_data

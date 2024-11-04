@@ -1,8 +1,12 @@
 version: 2
 
 sources:
-  - name : buybox-cloud-01
+  - name : de-coe
     schema : buybox_dataset
+    tables:
+      - name: BB_Raw_data   #we use this as the name for the value
+        identifier: merge_seed_final_table  #database table name
+
         
 
 

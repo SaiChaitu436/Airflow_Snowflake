@@ -1,1 +1,1 @@
-select * ,current_timestamp() as created_at from DAG_DB.DEV.SINGLE_ASIN
+select * ,current_timestamp() as created_at from `de-coe.buybox_dataset.BUYBOX_RAW_DATA`

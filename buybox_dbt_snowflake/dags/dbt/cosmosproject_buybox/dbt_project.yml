@@ -33,4 +33,9 @@ target-path: "target"
 # files using the `{{ config(...) }}` macro.
 models:
   cosmosproject_buybox:
-      +materialized: table
+    materialized: table
+  # merge_seed_final_table:
+  #   materialized: table
+  #   post-hook: 
+  #     - "DELETE FROM {{ ref('final_data_table') }}"
+  #     - "INSERT INTO {{ ref('final_data_table') }} SELECT * FROM {{ merge_seed_final_table }}"
